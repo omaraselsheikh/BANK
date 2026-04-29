@@ -1,0 +1,7 @@
+[
+    {
+        "key": "ctrl+r ctrl+q",
+        "command": "workbench.action.tasks.runTask",
+        "args": "Build and Run C++"
+    }
+]

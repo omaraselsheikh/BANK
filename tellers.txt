@@ -1,0 +1,10 @@
+Day 	 Number of Tellers
+Sunday        3
+Monday        4
+Tuesday       5
+Wednesday     4
+Thursday      6
+Friday        3
+Saturday      5
+-----------------------------------
+Total Tellers: 30
