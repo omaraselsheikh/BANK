@@ -1,5 +1,3 @@
 Transaction 	 Duration
-deposit            3
-deposit            3
-wothdraw           3
-ekjfnewa           3
+Deposit and Withdrawal3
+Food merge       2

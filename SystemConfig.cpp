@@ -206,15 +206,15 @@ struct Transactions
 
     string getValidTransactionName(const vector<string> &existingNames)
     {
-        string name = "0";
+        char name[100] = "Deposit"; // Initialize with a non-empty string to avoid issues with getline
         while (true)
         {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
             cout << "Enter transaction name (or 'done' to finish): ";
-            getline(cin, name);
+            cin.getline(name, 100);
 
-            if (name == "done")
+            if (strcmp(name, "done") == 0)
                 return name;
 
             if (!isValidName(name))

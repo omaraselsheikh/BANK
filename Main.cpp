@@ -4,6 +4,9 @@
 #include <fstream>
 #include <vector>
 #include "SystemConfig.cpp"
+#include "RunSimulation.cpp"
+#include "ViewReports.cpp"
+#include "ViewStats.cpp"
 
 using namespace std;
 
