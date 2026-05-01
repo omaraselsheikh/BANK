@@ -188,7 +188,7 @@ struct WorkingHours
     }
 };
 
-// needs some work to solve the problem of adding transactions and a new line problem
+// finalized
 struct Transactions
 {
 
@@ -200,8 +200,6 @@ struct Transactions
 
         for (int i = 0; i < names.size(); ++i)
         {
-            // Use a SPACE here, not a colon.
-            // This is what the beginner 'add' function expects.
             file << names[i] << " " << durations[i] << endl;
         }
 
@@ -221,6 +219,7 @@ struct Transactions
         while (true)
         {
             cout << "Enter transaction name (or 'done' to finish): ";
+
             // Use getline to allow names with spaces
             if (!getline(cin, name) || name == "done")
             {
@@ -287,9 +286,8 @@ struct Transactions
         string header, tempName;
         int tempDuration;
 
-        file >> header; // Reads "DATA_HEADER" and moves on
+        file >> header;
 
-        // This loop now works because it finds a space between name and duration
         while (file >> tempName >> tempDuration)
         {
             names.push_back(tempName);
@@ -329,7 +327,6 @@ struct Transactions
         cout << left << setw(20) << "Transaction" << "Duration" << endl;
         cout << "----------------------------------------------\n";
 
-        // This loop only runs if the file exists and has data
         while (file >> name >> duration)
         {
             cout << left << setw(20) << name << duration << " mins" << endl;
@@ -396,6 +393,7 @@ void viewCurrentConfiguration()
     cout << "=========================================\n";
     cout << "Current System Configuration:\n";
     cout << "=========================================\n";
+
     // Code to read and display current configuration from saved files
     tellers.DisplayTellers();
     hours.DisplayWorkingHours();

@@ -1,8 +1,4 @@
 #include <iostream>
-#include <iomanip>
-#include <string>
-#include <fstream>
-#include <vector>
 #include "SystemConfig.cpp"
 #include "RunSimulation.cpp"
 #include "ViewReports.cpp"
@@ -183,5 +179,3 @@ int main()
     } while (cmain != '5');
     return 0;
 }
-
-// Pretty Code :)
