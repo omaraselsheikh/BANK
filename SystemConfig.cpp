@@ -275,7 +275,7 @@ struct Transactions
 
         saveToFile(names, durations);
         cout << "-------------------------------\n";
-        cout << "Transactions Added successfully!" << endl;
+        cout << "Transactions Changed successfully!" << endl;
     }
 
     void addTransaction()
@@ -312,6 +312,8 @@ struct Transactions
         }
 
         saveToFile(names, durations);
+        cout << "-------------------------------\n";
+        cout << "Transactions Added successfully!" << endl;
     }
 
     void DisplayTransactions()
