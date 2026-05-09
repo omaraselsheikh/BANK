@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include "SystemConfig.cpp"
 #include "RunSimulation.cpp"
 #include "ViewReports.cpp"
@@ -39,6 +40,7 @@ void displayMainMenu()
     cout << "5. Exit" << endl;
     cout << "========================================" << endl;
 }
+
 // Main function to run the program
 int main()
 {
@@ -194,6 +196,9 @@ int main()
             char ch2;
             cout << "Enter your choice: ";
             cin >> ch2;
+
+            srand(time(0));
+            generatingcustomers();
 
             switch (ch2)
             {

@@ -1,2 +1,11 @@
-DATA_HEADER
-okka 2
+Transactions_Data
+deposit
+7
+withdraw
+4
+new account
+15
+delete account
+8
+inquiry about balance
+3

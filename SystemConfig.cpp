@@ -22,6 +22,22 @@ void displaySystemConfigMenu()
 // finalized
 struct NumberOfTellers
 {
+    void saveToFile(const string days[], const int numoftellers[], int size)
+    {
+
+        ofstream file("tellers.txt");
+
+        file << "Number_of_Tellers_Data" << endl;
+
+        for (int i = 0; i < size; i++)
+        {
+            file << days[i] << "\n"
+                 << numoftellers[i] << endl;
+        }
+
+        file.close();
+    }
+
     // Function to validate the number of tellers
     bool isValidNumber(int num)
     {
@@ -46,18 +62,7 @@ struct NumberOfTellers
             }
         }
 
-        // Code to save this configuration
-        ofstream file("tellers.txt");
-        int totalTellers = 0;
-        file << "Day \t Number of Tellers\n";
-        for (int i = 0; i < 7; i++)
-        {
-            file << days[i] << setw(15 - days[i].length()) << numTellers[i] << "\n";
-            totalTellers += numTellers[i];
-        }
-        file << "-----------------------------------\n";
-        file << "Total Tellers: " << totalTellers << endl;
-        file.close();
+        saveToFile(days, numTellers, 7);
     }
 
     // Function to display the number of tellers from the saved configuration
@@ -66,19 +71,57 @@ struct NumberOfTellers
         cout << "=========================================\n";
         cout << "Current Number of Tellers Configuration:\n";
         cout << "=========================================\n";
+
         ifstream file("tellers.txt");
-        string line;
-        while (getline(file, line))
+
+        string days[7] = {};
+        int numTellers[7] = {};
+        string header;
+        int i = 0;
+        int totalTellers = 0;
+
+        getline(file, header);
+
+        while (i < 7 && getline(file, days[i]))
         {
-            cout << line << endl;
+            if (file >> numTellers[i])
+            {
+                totalTellers += numTellers[i];
+                i++;
+                file.ignore(); // Clear the newline after the number
+            }
         }
+
         file.close();
+
+        cout << left << setw(15) << "Day" << "Number of Tellers" << endl;
+        cout << "-----------------------------------\n";
+        for (int j = 0; j < i; j++) // Use 'i' to only print what was actually read
+        {
+            cout << left << setw(15) << days[j] << numTellers[j] << "\n";
+        }
+        cout << "-----------------------------------\n";
+        cout << "Total Tellers: " << totalTellers << endl;
+        ;
     }
 };
 
 // finalized
 struct WorkingHours
 {
+    void saveToFile(string opening, string closing)
+    {
+
+        ofstream file("workinghours.txt");
+
+        file << "Working_hours_Data" << endl;
+
+        file << opening << "\n"
+             << closing;
+
+        file.close();
+    }
+
     int HourstoMinutes(string time)
     {
         return ((time[0] - '0') * 10 + (time[1] - '0')) * 60 + (time[3] - '0') * 10 + (time[4] - '0');
@@ -95,7 +138,7 @@ struct WorkingHours
 
     void setWorkingHours()
     {
-        char opening[6], closing[6];
+        string opening, closing;
         do
         {
             cout << "ENTER OPENING TIME IN THIS FORMAT (HH:MM) 24_HR Format:\n";
@@ -121,12 +164,7 @@ struct WorkingHours
             if (HourstoMinutes(closing) <= HourstoMinutes(opening))
                 cout << "ERROR\nCLOSING TIME SHOULD BE AFTER OPENING TIME\nPLEASE RE-ENTER THEM\n";
 
-            ofstream file("workinghours.txt");
-
-            file << "Opening Time : " << opening << endl;
-            file << "Closing Time : " << closing << endl;
-            file << "Total Working Minutes : " << HourstoMinutes(closing) - HourstoMinutes(opening) << endl;
-            file.close();
+            saveToFile(opening, closing);
 
         } while (HourstoMinutes(closing) <= HourstoMinutes(opening));
     }
@@ -139,12 +177,15 @@ struct WorkingHours
 
         ifstream file("workinghours.txt");
 
-        string line;
+        string header, opening, closing;
 
-        while (getline(file, line))
-        {
-            cout << line << endl;
-        }
+        getline(file, header);
+        getline(file, opening);
+        getline(file, closing);
+
+        cout << "Opening Time : " << opening << endl;
+        cout << "Closing Time : " << closing << endl;
+        cout << "Total Working Minutes : " << HourstoMinutes(closing) - HourstoMinutes(opening) << endl;
 
         file.close();
     }
@@ -156,18 +197,19 @@ struct Transactions
 
     void saveToFile(const vector<string> &names, const vector<int> &durations)
     {
+
         ofstream file("transactions.txt");
 
-        file << "DATA_HEADER" << endl;
+        file << "Transactions_Data" << endl;
 
         for (int i = 0; i < names.size(); ++i)
         {
-            file << names[i] << " " << durations[i] << endl;
+            file << names[i] << "\n"
+                 << durations[i] << endl;
         }
 
         file.close();
     }
-
     // Bool to check for duplicates
     bool alreadyExists(const vector<string> &names, const string &name)
     {
@@ -241,23 +283,11 @@ struct Transactions
 
     void addTransaction()
     {
+
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
         vector<string> names;
         vector<int> durations;
-
-        ifstream file("transactions.txt");
-        string header, tempName;
-        int tempDuration;
-
-        file >> header;
-
-        while (file >> tempName >> tempDuration)
-        {
-            names.push_back(tempName);
-            durations.push_back(tempDuration);
-        }
-
-        file.close();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         while (true)
         {
@@ -271,7 +301,15 @@ struct Transactions
             durations.push_back(duration);
         }
 
-        saveToFile(names, durations);
+        ofstream file("transactions.txt", ios::app);
+
+        for (int i = 0; i < names.size(); ++i)
+        {
+            file << names[i] << "\n"
+                 << durations[i] << endl;
+        }
+
+        file.close();
         cout << "-------------------------------\n";
         cout << "Transactions Added successfully!" << endl;
     }
@@ -285,13 +323,16 @@ struct Transactions
         string header, name;
         int duration;
 
-        file >> header; // If file doesn't exist, this fails silently
-        cout << left << setw(20) << "Transaction" << "Duration" << endl;
+        getline(file, header); // If file doesn't exist, this fails silently
+
+        cout << left << setw(30) << "Transaction" << "Duration" << endl;
         cout << "----------------------------------------------\n";
 
-        while (file >> name >> duration)
+        while (getline(file, name) && file >> duration)
         {
-            cout << left << setw(20) << name << duration << " mins" << endl;
+            cout << left << setw(30) << name << duration << " mins" << endl;
+
+            file.ignore(numeric_limits<streamsize>::max(), '\n');
         }
         file.close();
     }
@@ -300,6 +341,7 @@ struct Transactions
 // finalized
 struct YearlyCustomerTarget
 {
+
     void setYearlyCustomerTarget()
     {
         int target;
@@ -322,23 +364,25 @@ struct YearlyCustomerTarget
         }
 
         ofstream file("yearlytarget.txt");
-        file << "Yearly Customer Target: " << target << endl;
-        file << "Average Customers per Day: " << target / 360 << endl;
+        file << target << endl;
+        file << target / 360 << endl;
         file.close();
     }
 
     void DisplayYearlyCustomerTarget()
     {
+
         cout << "=========================================\n";
         cout << "Current Yearly Customer Target Configuration:\n";
         cout << "=========================================\n";
 
         ifstream file("yearlytarget.txt");
-        string line;
+        int target, avg;
 
-        while (getline(file, line))
+        while (file >> target >> avg)
         {
-            cout << line << endl;
+            cout << "Yearly Customer Target: " << target << endl;
+            cout << "Average Customers per Day: " << avg << endl;
         }
 
         file.close();
