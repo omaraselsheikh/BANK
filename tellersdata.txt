@@ -1,0 +1,12 @@
+Teller Id                               Transaction assigned type               Transaction assigned duration
+========================================================================================================================
+001                                     Deposit                                 10
+002                                     Withdraw                                10
+003                                     Inquiry about Balance                   5
+004                                     New account                             15
+005                                     Delete accout                           5
+006                                     Deposit                                 10
+007                                     Withdraw                                10
+008                                     Inquiry about Balance                   5
+009                                     New account                             15
+010                                     Delete accout                           5

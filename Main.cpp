@@ -1,10 +1,12 @@
-#include <iostream>
-#include <cstdlib>
+
+#include "includes.h"
 #include "SystemConfig.cpp"
 #include "GeneratingCustomersData.cpp"
 #include "ViewReports.cpp"
 #include "ViewStats.cpp"
 #include "GeneratingtTellersData.cpp"
+#include "simulation.cpp"
+#include "readdata.h"
 
 using namespace std;
 
@@ -27,7 +29,6 @@ void title()
          << endl
          << endl; // bottom right corner
 }
-
 void displayMainMenu()
 {
     cout << "=========================================\n";
@@ -71,7 +72,6 @@ int main()
             case '1':
 
                 // Code to set number of tellers and save this configuration
-                NumberOfTellers tellers;
 
                 cout << "1. Edit Number of Tellers" << endl
                      << "2. View Number of Tellers" << endl
@@ -83,11 +83,11 @@ int main()
                 // Code to set or view number of tellers based on user choice
                 if (tellerChoice == '1')
                 {
-                    tellers.numberofTellers();
+                    numberofTellers();
                 }
                 else if (tellerChoice == '2')
                 {
-                    tellers.DisplayTellers();
+                    DisplayTellers();
                 }
                 else
                 {
@@ -98,8 +98,6 @@ int main()
 
             case '2':
 
-                WorkingHours Hours;
-
                 cout << "1. Edit Number of Working Hours" << endl
                      << "2. View Number of Working Hours" << endl;
                 cout << "Enter your choice: ";
@@ -109,11 +107,11 @@ int main()
                 // Code to set or view number of working hours based on user choice
                 if (hoursChoice == '1')
                 {
-                    Hours.setWorkingHours();
+                    setWorkingHours();
                 }
                 else if (hoursChoice == '2')
                 {
-                    Hours.DisplayWorkingHours();
+                    DisplayWorkingHours();
                 }
                 else
                 {
@@ -125,7 +123,6 @@ int main()
             case '3':
 
                 // Code for defining transaction types
-                Transactions transactions;
 
                 cout << "1. Change Transactions" << endl;
                 cout << "2. Add Transactions" << endl;
@@ -137,15 +134,15 @@ int main()
                 // Code to set or view transaction types based on user choice
                 if (transChoice == '1')
                 {
-                    transactions.defineTransactionTypes();
+                    defineTransactionTypes();
                 }
                 else if (transChoice == '2')
                 {
-                    transactions.addTransaction();
+                    addTransaction();
                 }
                 else if (transChoice == '3')
                 {
-                    transactions.DisplayTransactions();
+                    DisplayTransactions();
                 }
                 else
                 {
@@ -157,7 +154,6 @@ int main()
             case '4':
 
                 // Code for setting yearly customer target
-                YearlyCustomerTarget target;
                 cout << "1. Edit Yearly Customer Target" << endl;
                 cout << "2. View Yearly Customer Target" << endl;
                 cout << "Enter your choice: ";
@@ -165,11 +161,11 @@ int main()
                 cin >> targetChoice;
                 if (targetChoice == '1')
                 {
-                    target.setYearlyCustomerTarget();
+                    setYearlyCustomerTarget();
                 }
                 else if (targetChoice == '2')
                 {
-                    target.DisplayYearlyCustomerTarget();
+                    DisplayYearlyCustomerTarget();
                 }
                 else
                 {
@@ -191,39 +187,27 @@ int main()
             break;
 
         case '2':
-
+        {
             displayRunSimulationMenu();
-
-            char ch2;
             cout << "Enter your choice: ";
+            char ch2;
             cin >> ch2;
-
-            srand(time(0));
-            generatingcustomers();
-
             switch (ch2)
             {
             case '1':
-            {
-                cout << customersperday() << endl;
+            { // Code for running daily simulation
+                generatingtellers();
+                generatingcustomers();
+                cout << "========================================" << endl;
+                cout << "Daily Simulation done Successfully" << endl;
                 break;
             }
             case '2':
-            {
-                readData m;
-                cout << m.readTellersNumber() << endl;
+            { // Code for running weekly simulation
                 break;
             }
             case '3':
-            {
-                readData rd;                             // Create an instance of readData
-                workingHours wh = rd.readWorkingHours(); // Call the function
-
-                // Print the values
-                cout << "Opening time: " << wh.opening << endl;
-                cout << "Closing time: " << wh.closing << endl;
-                cout << "Total working minutes: " << wh.totalMinutes << endl;
-
+            { // Code for running full year simulation
                 break;
             }
             case '4':
@@ -232,8 +216,9 @@ int main()
                 cout << "Invalid choice. Returning to main menu." << endl;
                 break;
             }
+        }
 
-            break;
+        break;
 
         case '3':
             cout << "View Reports selected." << endl;

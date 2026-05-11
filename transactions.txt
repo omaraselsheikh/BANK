@@ -1,11 +1,11 @@
 Transactions_Data
-deposit
-7
-withdraw
-4
-new account
+Deposit
+10
+Withdraw
+10
+Inquiry about Balance
+5
+New account
 15
-delete account
-8
-inquiry about balance
-3
+Delete accout
+5
