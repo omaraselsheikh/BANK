@@ -152,9 +152,11 @@ int customersperday()
 
 struct customerdata : public readData // needs Service Start/End Time, Served Status (Yes/No) - most probably after doing simulation
 {
+    static int idCounter;
+
     int customerid()
     {
-        return (1000 + rand() % 1000);
+        return ++idCounter;
     }
 
     string arrivaltime()
@@ -205,7 +207,7 @@ void generatingcustomers()
     for (int i = 0; i < x; i++)
     {
 
-        file << c[i].id << setw(24) << c[i].arrive << setw(48) << c[i].transtype.name << setw(60) << c[i].transtype.duration << endl;
+        file << setfill('0') << setw(3) << c[i].id << setfill(' ') << setw(24) << c[i].arrive << setw(48) << c[i].transtype.name << setw(60) << c[i].transtype.duration << endl;
     }
     file << "customer generated = " << x << endl;
     file.close();
