@@ -1,22 +1,27 @@
 #pragma once
 
-#include "includes.h"
+#include <iostream>
+#include <string>
+#include <vector>
 
-// The Struct definition stays in the header
+// 'inline' stops the duplicate symbol error for this array
+inline const std::string days[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
 struct Transaction
 {
     int duration;
-    string type;
+    std::string type;
 };
 
-// Function Prototypes (tell the compiler these exist elsewhere)
-vector<Transaction> readtransaction();
+std::vector<Transaction> readtransaction();
 
 struct Teller
 {
     int numtellers;
-    string day;
+    std::string days;
 };
+
+std::vector<Teller> readingalltellers();
 
 struct YearlyCustomerTarget
 {
@@ -28,17 +33,13 @@ YearlyCustomerTarget readingYearlyCustomerTarget();
 
 struct WorkingHours
 {
-    string opening;
-    string closing;
+    std::string opening;
+    std::string closing;
     int total;
 };
 
 WorkingHours readingWorkingHours();
 
-// 2. Function Prototypes (Declarations)
-// These tell the compiler the "names" and "types" of your functions
-vector<Teller> readingalltellers();
-
-string formatToThreeDigits(int x);
-vector<string> getIDs(int n);
-int HourstoMinutes(string time);
+std::string formatToThreeDigits(int x);
+std::vector<std::string> getIDs(int n);
+int HourstoMinutes(std::string time);

@@ -1,40 +1,27 @@
+#include <iostream>
 
-#include "includes.h"
-#include "SystemConfig.cpp"
-#include "GeneratingCustomersData.cpp"
-#include "ViewReports.cpp"
-#include "ViewStats.cpp"
-#include "GeneratingtTellersData.cpp"
-#include "simulation.cpp"
+// Include ONLY headers!
 #include "readdata.h"
+#include "GenerateCustomerTeller.h"
+#include "SystemConfig.h"
+#include "RunSimulation.h"
 
 using namespace std;
 
 void title()
 {
-    const char str[35] = "BANK CUSTOMERS QUEUING SYSTEM";
-    int width = 40;
-    cout << setw(40);
-    cout << char(201); // upper left corner
-    for (int i = 0; i < width; i++)
-        cout << char(205);
-    cout << char(187); // upper right corner
-    cout << endl
-         << setw(40) << char(186) << "      " << str << "      " << char(186) << endl;
-    cout << setw(40);
-    cout << char(200); // bottom left corner
-    for (int i = 0; i < width; i++)
-        cout << char(205);
-    cout << char(188) << endl
-         << endl
-         << endl; // bottom right corner
+    std::cout << "╔════════════════════════════════════════╗\n";
+    std::cout << "║     BANK CUSTOMERS QUEUING SYSTEM      ║\n";
+    std::cout << "╚════════════════════════════════════════╝\n";
 }
+
 void displayMainMenu()
 {
     cout << "=========================================\n";
-    cout << "Welcome to the Bank Simulation System!" << endl;
+    cout << "Welcome! " << endl;
     cout << "=========================================\n";
-    cout << "Please select an option:" << endl;
+    cout << "Please Select an Option:" << endl;
+    cout << "=========================================\n";
     cout << "1. System Configuration" << endl;
     cout << "2. Run Simulation" << endl;
     cout << "3. View Reports" << endl;
@@ -43,7 +30,6 @@ void displayMainMenu()
     cout << "========================================" << endl;
 }
 
-// Main function to run the program
 int main()
 {
     title();
@@ -52,17 +38,13 @@ int main()
     do
     {
         displayMainMenu();
-
         cout << "Enter your choice: ";
         cin >> cmain;
 
         switch (cmain)
         {
         case '1':
-
-            // Code to display system configuration menu and handle user choices
             displaySystemConfigMenu();
-
             char ch1;
             cout << "Enter your choice: ";
             cin >> ch1;
@@ -70,118 +52,56 @@ int main()
             switch (ch1)
             {
             case '1':
-
-                // Code to set number of tellers and save this configuration
-
-                cout << "1. Edit Number of Tellers" << endl
-                     << "2. View Number of Tellers" << endl
-                     << "Enter your choice: ";
-
+                cout << "1. Edit Number of Tellers\n2. View Number of Tellers\nEnter your choice: ";
                 char tellerChoice;
                 cin >> tellerChoice;
-
-                // Code to set or view number of tellers based on user choice
                 if (tellerChoice == '1')
-                {
                     numberofTellers();
-                }
                 else if (tellerChoice == '2')
-                {
                     DisplayTellers();
-                }
                 else
-                {
-                    cout << "Invalid choice. Returning to System Configuration menu." << endl;
-                }
-
+                    cout << "Invalid choice.\n";
                 break;
-
             case '2':
-
-                cout << "1. Edit Number of Working Hours" << endl
-                     << "2. View Number of Working Hours" << endl;
-                cout << "Enter your choice: ";
+                cout << "1. Edit Number of Working Hours\n2. View Number of Working Hours\nEnter your choice: ";
                 char hoursChoice;
                 cin >> hoursChoice;
-
-                // Code to set or view number of working hours based on user choice
                 if (hoursChoice == '1')
-                {
                     setWorkingHours();
-                }
                 else if (hoursChoice == '2')
-                {
                     DisplayWorkingHours();
-                }
                 else
-                {
-                    cout << "Invalid choice. Returning to System Configuration menu." << endl;
-                }
-
+                    cout << "Invalid choice.\n";
                 break;
-
             case '3':
-
-                // Code for defining transaction types
-
-                cout << "1. Change Transactions" << endl;
-                cout << "2. Add Transactions" << endl;
-                cout << "3. View Transactions" << endl;
-                cout << "Enter your choice: ";
+                cout << "1. Change Transactions\n2. Add Transactions\n3. View Transactions\nEnter your choice: ";
                 char transChoice;
                 cin >> transChoice;
-
-                // Code to set or view transaction types based on user choice
                 if (transChoice == '1')
-                {
                     defineTransactionTypes();
-                }
                 else if (transChoice == '2')
-                {
                     addTransaction();
-                }
                 else if (transChoice == '3')
-                {
                     DisplayTransactions();
-                }
                 else
-                {
-                    cout << "Invalid choice. Returning to System Configuration menu." << endl;
-                }
-
+                    cout << "Invalid choice.\n";
                 break;
-
             case '4':
-
-                // Code for setting yearly customer target
-                cout << "1. Edit Yearly Customer Target" << endl;
-                cout << "2. View Yearly Customer Target" << endl;
-                cout << "Enter your choice: ";
+                cout << "1. Edit Yearly Customer Target\n2. View Yearly Customer Target\nEnter your choice: ";
                 char targetChoice;
                 cin >> targetChoice;
                 if (targetChoice == '1')
-                {
                     setYearlyCustomerTarget();
-                }
                 else if (targetChoice == '2')
-                {
                     DisplayYearlyCustomerTarget();
-                }
                 else
-                {
-                    cout << "Invalid choice. Returning to System Configuration menu." << endl;
-                }
-
+                    cout << "Invalid choice.\n";
                 break;
-
             case '5':
                 viewCurrentConfiguration();
                 break;
-
-            case '6':
-                break;
             default:
-                cout << "Invalid choice. Returning to main menu." << endl;
+                cout << "Invalid choice. Returning to main menu.\n";
                 break;
             }
             break;
@@ -192,49 +112,25 @@ int main()
             cout << "Enter your choice: ";
             char ch2;
             cin >> ch2;
-            switch (ch2)
+            if (ch2 == '1')
             {
-            case '1':
-            { // Code for running daily simulation
-                generatingtellers();
-                generatingcustomers();
-                cout << "========================================" << endl;
-                cout << "Daily Simulation done Successfully" << endl;
-                break;
+                int dayindex = getDaySimulation();
+                simulateDay(dayindex);
+                cout << "========================================\nDaily Simulation done Successfully\n";
             }
-            case '2':
-            { // Code for running weekly simulation
-                break;
-            }
-            case '3':
-            { // Code for running full year simulation
-                break;
-            }
-            case '4':
-                break;
-            default:
-                cout << "Invalid choice. Returning to main menu." << endl;
-                break;
-            }
+            break;
         }
-
-        break;
-
         case '3':
-            cout << "View Reports selected." << endl;
-            // Code to view reports
+            cout << "View Reports selected.\n";
             break;
-
         case '4':
-            cout << "View Statistics selected." << endl;
-            // Code to view statistics
+            cout << "View Statistics selected.\n";
             break;
-
+        case '5':
+            cout << "Goodbye!\n";
+            break;
         default:
-            if (cmain != '5')
-            {
-                cout << "Invalid choice. Please try again." << endl;
-            }
+            cout << "Invalid choice. Please try again.\n";
             break;
         }
     } while (cmain != '5');

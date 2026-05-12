@@ -1,19 +1,18 @@
-#include "includes.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
 #include "readdata.h"
 
-//----Transaction-------------------------------------------------------------------
+using namespace std;
 
 vector<Transaction> readtransaction()
 {
-    string transaction;
-
     string header;
     Transaction t;
     vector<Transaction> alltransactions;
-
     ifstream file("transactions.txt");
     getline(file, header);
-
     while (getline(file, t.type))
     {
         if (file >> t.duration)
@@ -25,31 +24,21 @@ vector<Transaction> readtransaction()
     return alltransactions;
 }
 
-//----Teller-------------------------------------------------------------------
-
 vector<Teller> readingalltellers()
 {
-    int i;
+    vector<Teller> alltellers;
     string header;
-
     ifstream file("tellers.txt");
     getline(file, header);
-
-    vector<Teller> alltellers;
-
     Teller t;
-
-    for (i = 0; i < 7; i++)
+    for (int i = 0; i < 7; i++)
     {
-        file >> t.day >> t.numtellers;
+        file >> t.days >> t.numtellers;
         alltellers.push_back(t);
     }
     file.close();
-
     return alltellers;
 }
-
-//----Yearly Customer Target-------------------------------------------------------------------
 
 YearlyCustomerTarget readingYearlyCustomerTarget()
 {
@@ -60,11 +49,8 @@ YearlyCustomerTarget readingYearlyCustomerTarget()
     file >> yct.dailyavg;
     file.ignore(1000, '\n');
     file.close();
-
     return yct;
 }
-
-//----Working Hours------------------------------------------------------------------
 
 int HourstoMinutes(string time)
 {
@@ -75,7 +61,6 @@ WorkingHours readingWorkingHours()
 {
     WorkingHours h;
     string header;
-
     ifstream file("workinghours.txt");
     if (file.is_open())
     {
@@ -85,39 +70,26 @@ WorkingHours readingWorkingHours()
         h.total = HourstoMinutes(h.closing) - HourstoMinutes(h.opening);
         file.close();
     }
-
     return h;
 }
 
-//----ID-------------------------------------------------------------------
-
 string formatToThreeDigits(int x)
 {
-    // Convert int to string
     string s = to_string(x);
-
     if (s.length() == 1)
-    {
         return "00" + s;
-    }
     else if (s.length() == 2)
-    {
         return "0" + s;
-    }
     else
-    {
         return s;
-    }
 }
 
 vector<string> getIDs(int n)
 {
-    vector<string> ID = {};
-
+    vector<string> ID;
     for (int i = 0; i < n; i++)
     {
         ID.push_back(formatToThreeDigits(i + 1));
     }
-
     return ID;
 }
